@@ -63,5 +63,7 @@ for n in range(1, 800):
     intransitiveness[n - 1] = np.min(np.max(V, axis=0)) - 1 / 2
 
 plt.plot(p, intransitiveness)
+plt.show()
 plt.xlabel("probability")
 plt.ylabel("intransitiveness")
+print(intransitiveness[400])
