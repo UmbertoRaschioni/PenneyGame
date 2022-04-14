@@ -27,7 +27,7 @@ def gameloop(p, s1, s2):
         sequence = [""]
     return P1W / 1000.0
 
-#p represents probability, it doesn't consider probabilities under 0.1 and over 0.9 because the simulation would be too much long, and the results are not interesting in those ranges
+#p represents probability to toss T, it doesn't consider probabilities under 0.1 and over 0.9 because the simulation would be too much long, and the results are not interesting in those ranges
 p = np.arange(0.1, 0.9, 0.001)
 intransitiveness = [0] * 800
 #V is the victory matrix, each element of the matrix is the result of a gameloop between two sequences, the for loop repeat everything for different values of probability
