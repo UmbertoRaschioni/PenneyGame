@@ -11,18 +11,20 @@ def gameloop(p, s1, s2):
     sequence = [""]
     #playing the game 1000 times
     for n in range(1000):
+        i=0
         CoinSides = ["H", "T"]
         while True:
     #appending a toss to the sequence until one of the 2 sequences s1 or s2 appears
             sequence += random.choices(CoinSides, weights=[1 - p, p], k=1)
     #the conditional break starts when in the sequence there are at least three tosses
-            if n > 1:
-                if s1 in sequence[n - 1] + sequence[n] + sequence[n + 1]:
+            if i > 1:
+                if s1 in sequence[i - 1] + sequence[i] + sequence[i + 1]:
                     P1W += 1
                     break
-                if s2 in sequence[n - 1] + sequence[n] + sequence[n + 1]:
+                if s2 in sequence[i - 1] + sequence[i] + sequence[i + 1]:
                     P2W += 1
                     break
+            i+=1
     #sequence returns empty after each game
         sequence = [""]
     return P1W / 1000.0
