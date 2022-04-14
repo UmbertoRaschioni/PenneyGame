@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import random
+import math
 
 
 def gameloop(p, s1, s2):
@@ -10,7 +11,7 @@ def gameloop(p, s1, s2):
     #setting an empty initial sequence
     sequence = [""]
     #playing the game 1000 times
-    for n in range(1000):
+    for n in range(100):
         i=0
         CoinSides = ["H", "T"]
         while True:
@@ -27,13 +28,13 @@ def gameloop(p, s1, s2):
             i+=1
     #sequence returns empty after each game
         sequence = [""]
-    return P1W / 1000.0
+    return P1W / 100.0
 
 #p represents probability to toss T, it doesn't consider probabilities under 0.1 and over 0.9 because the simulation would be too much long, and the results are not interesting in those ranges
 p = np.arange(0.1, 0.9, 0.001)
-intransitiveness = [0] * 800
+intransitiveness = np.zeros_like(p)
 #V is the victory matrix, each element of the matrix is the result of a gameloop between two sequences, the for loop repeat everything for different values of probability
-for n in range(1, 800):
+for n in range(800):
     V = np.matrix([[0, gameloop(p[n - 1], "HHH", "HHT"), gameloop(p[n - 1], "HHH", "HTH"),
                     gameloop(p[n - 1], "HHH", "HTT"), gameloop(p[n - 1], "HHH", "THH"),
                     gameloop(p[n - 1], "HHH", "THT"), gameloop(p[n - 1], "HHH", "TTH"),
@@ -67,6 +68,8 @@ for n in range(1, 800):
                     gameloop(p[n - 1], "TTT", "THH"), gameloop(p[n - 1], "TTT", "THT"),
                     gameloop(p[n - 1], "TTT", "TTH"), 0]])
     intransitiveness[n - 1] = np.min(np.max(V, axis=0)) - 1 / 2
+    if math.isclose(0,intransitiveness[n-1],abs_tol=0.00001):
+        print(p[n-1])
 
 plt.plot(p, intransitiveness)
 plt.xlabel("probability")
