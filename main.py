@@ -13,7 +13,9 @@ def gameloop(p, s1, s2):
     for n in range(1000):
         CoinSides = ["H", "T"]
         while True:
+    #appending a toss to the sequence until one of the 2 sequences s1 or s2 appears
             sequence += random.choices(CoinSides, weights=[1 - p, p], k=1)
+    #the conditional break starts when in the sequence there are at least three tosses
             if n > 1:
                 if s1 in sequence[n - 1] + sequence[n] + sequence[n + 1]:
                     P1W += 1
@@ -21,13 +23,14 @@ def gameloop(p, s1, s2):
                 if s2 in sequence[n - 1] + sequence[n] + sequence[n + 1]:
                     P2W += 1
                     break
+    #sequence returns empty after each game
         sequence = [""]
     return P1W / 1000.0
 
-
+#p represents probability, it doesn't consider probabilities under 0.1 and over 0.9 because the simulation would be too much long, and the results are not interesting in those ranges
 p = np.arange(0.1, 0.9, 0.001)
 intransitiveness = [0] * 800
-
+#V is the victory matrix, each element of the matrix is the result of a gameloop between two sequences, the for loop repeat everything for different values of probability
 for n in range(1, 800):
     V = np.matrix([[0, gameloop(p[n - 1], "HHH", "HHT"), gameloop(p[n - 1], "HHH", "HTH"),
                     gameloop(p[n - 1], "HHH", "HTT"), gameloop(p[n - 1], "HHH", "THH"),
