@@ -11,7 +11,7 @@ def gameloop(p, s1, s2):
     #setting an empty initial sequence
     sequence = [""]
     #playing the game 1000 times
-    for n in range(100):
+    for n in range(1000):
         i=0
         CoinSides = ["H", "T"]
         while True:
@@ -28,7 +28,7 @@ def gameloop(p, s1, s2):
             i+=1
     #sequence returns empty after each game
         sequence = [""]
-    return P1W / 100.0
+    return P1W / 1000.0
 
 #p represents probability to toss T, it doesn't consider probabilities under 0.1 and over 0.9 because the simulation would be too much long, and the results are not interesting in those ranges
 p = np.arange(0.1, 0.9, 0.001)
