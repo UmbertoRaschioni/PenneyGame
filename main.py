@@ -4,36 +4,44 @@ import random
 import math
 
 
-def gameloop(p, s1, s2):
-    #setting number of victories for player 1 (P1W) and player 2 (P2W) to zero
-    P1W = 0
-    P2W = 0
-    #setting an empty initial sequence
+def gameloop(probability, s1, s2):
+    # setting number of victories for player 1 (P1W) and player 2 (P2W)
+    # to zero
+    p1w = 0
+    p2w = 0
+    # setting an empty initial sequence
     sequence = [""]
-    #playing the game 1000 times
-    for n in range(1000):
-        i=0
-        CoinSides = ["H", "T"]
+    # playing the game 1000 times
+    for number in range(1000):
+        i = 0
+        coin_sides = ["H", "T"]
         while True:
-    #appending a toss to the sequence until one of the 2 sequences s1 or s2 appears
-            sequence += random.choices(CoinSides, weights=[1 - p, p], k=1)
-    #the conditional break starts when in the sequence there are at least three tosses
+            # appending a toss to the sequence until one of the 2 sequences s1
+            # or s2 appears
+            sequence += random.choices(coin_sides, weights=[1 - probability, probability], k=1)
+            # the conditional break starts when in the sequence there are at
+            # least three tosses
             if i > 1:
                 if s1 in sequence[i - 1] + sequence[i] + sequence[i + 1]:
-                    P1W += 1
+                    p1w += 1
                     break
                 if s2 in sequence[i - 1] + sequence[i] + sequence[i + 1]:
-                    P2W += 1
+                    p2w += 1
                     break
-            i+=1
-    #sequence returns empty after each game
+            i += 1
+        # sequence returns empty after each game
         sequence = [""]
-    return P1W / 1000.0
+    return p1w / 1000.0
 
-#p represents probability to toss T, it doesn't consider probabilities under 0.1 and over 0.9 because the simulation would be too much long, and the results are not interesting in those ranges
+
+# p represents probability to toss T, it doesn't consider probabilities
+# under 0.1 and over 0.9 because the simulation would be too much long,
+# and the results are not interesting in those ranges
 p = np.arange(0.1, 0.9, 0.001)
 intransitiveness = np.zeros_like(p)
-#V is the victory matrix, each element of the matrix is the result of a gameloop between two sequences, the for loop repeat everything for different values of probability
+# V is the victory matrix, each element of the matrix is the result of a
+# gameloop between two sequences, the for loop repeat everything for
+# different values of probability
 for n in range(800):
     V = np.matrix([[0, gameloop(p[n - 1], "HHH", "HHT"), gameloop(p[n - 1], "HHH", "HTH"),
                     gameloop(p[n - 1], "HHH", "HTT"), gameloop(p[n - 1], "HHH", "THH"),
@@ -67,15 +75,17 @@ for n in range(800):
                     gameloop(p[n - 1], "TTT", "HTH"), gameloop(p[n - 1], "TTT", "HTT"),
                     gameloop(p[n - 1], "TTT", "THH"), gameloop(p[n - 1], "TTT", "THT"),
                     gameloop(p[n - 1], "TTT", "TTH"), 0]])
-    #intransitiveness is a function of probability, and gives me the unfairness of the game for each probability p to toss a T
+    # intransitiveness is a function of probability, and gives me the
+    # unfairness of the game for each probability p to toss a T
     intransitiveness[n - 1] = np.min(np.max(V, axis=0)) - 1 / 2
-    #printing values of probability that give transitiveness of the game, using isclose method because of issues with equality testing of no integers numbers
-    if math.isclose(0,intransitiveness[n-1],abs_tol=0.00001):
-        print(p[n-1])
+    # printing values of probability that give transitiveness of the
+    # game, using isclose method because of issues with equality
+    # testing of no integers numbers
+    if math.isclose(0, intransitiveness[n - 1], abs_tol=0.00001):
+        print(p[n - 1])
 
-#plotting the function intransitiveness(p)
+# plotting the function intransitiveness(p)
 plt.plot(p, intransitiveness)
 plt.xlabel("probability")
 plt.ylabel("intransitiveness")
 plt.show()
-
