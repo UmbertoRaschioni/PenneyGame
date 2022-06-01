@@ -67,10 +67,13 @@ for n in range(800):
                     gameloop(p[n - 1], "TTT", "HTH"), gameloop(p[n - 1], "TTT", "HTT"),
                     gameloop(p[n - 1], "TTT", "THH"), gameloop(p[n - 1], "TTT", "THT"),
                     gameloop(p[n - 1], "TTT", "TTH"), 0]])
+    #intransitiveness is a function of probability, and gives me the unfairness of the game for each probability p to toss a T
     intransitiveness[n - 1] = np.min(np.max(V, axis=0)) - 1 / 2
+    #printing values of probability that give transitiveness of the game, using isclose method because of issues with equality testing of no integers numbers
     if math.isclose(0,intransitiveness[n-1],abs_tol=0.00001):
         print(p[n-1])
 
+#plotting the function intransitiveness(p)
 plt.plot(p, intransitiveness)
 plt.xlabel("probability")
 plt.ylabel("intransitiveness")
