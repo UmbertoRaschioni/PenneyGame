@@ -5,13 +5,14 @@ import math
 
 
 def gameloop(probability, s1, s2):
-    # setting number of victories for player 1 (P1W) and player 2 (P2W)
+    # setting number of victories for player 1 (p1w) and player 2 (p2w)
     # to zero
     p1w = 0
     p2w = 0
-    # setting an empty initial sequence
+    # setting an empty initial sequence in order to append future tosses
     sequence = [""]
-    # playing the game 1000 times
+    # playing the game 1000 times in order to have good statistics
+    # (could be increased as you wish)
     for number in range(1000):
         i = 0
         coin_sides = ["H", "T"]
