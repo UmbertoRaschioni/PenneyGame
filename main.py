@@ -23,8 +23,10 @@ def check_victory(s1, s2, sequence):
     :param sequence: sequence of coins tossed
     :return: 0 if p1 won, 1 if p2 won, -1 if no one won
     """
-    if check_sequence(s1, sequence): return 0
-    if check_sequence(s2, sequence): return 1
+    if check_sequence(s1, sequence):
+        return 0
+    if check_sequence(s2, sequence):
+        return 1
     return -1
 
 
@@ -55,6 +57,7 @@ def gameloop(probability, s1, s2):
         # sequence returns empty after each game
 
     return p1w / tests
+
 
 if __name__ == "__main__":
     # p represents probability to toss T, it doesn't consider probabilities
@@ -107,6 +110,4 @@ if __name__ == "__main__":
         if math.isclose(0, intransitiveness[n - 1], abs_tol=0.00001):
             print(p[n - 1])
 
-    pickle.dump([p,intransitiveness], open("data.pkl", "wb"))
-
-
+    pickle.dump([p, intransitiveness], open("data.pkl", "wb"))
