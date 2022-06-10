@@ -8,8 +8,8 @@ import tqdm
 def check_sequence(s, sequence):
     """
     Check if s in sequence
-    :param s: sequence chosen from p1 or p2
-    :param sequence: sequence of coins tossed
+    :param s: sequence chosen by p1 or p2
+    :param sequence: sequence of coin tosses
     :return: True if s in sequence
     """
     return s in sequence[-3:]
@@ -20,7 +20,7 @@ def check_victory(s1, s2, sequence):
     Check if someone won
     :param s1: sequence of p1
     :param s2: sequence of p2
-    :param sequence: sequence of coins tossed
+    :param sequence: sequence of coin tosses
     :return: 0 if p1 won, 1 if p2 won, -1 if no one won
     """
     if check_sequence(s1, sequence):
@@ -31,44 +31,56 @@ def check_victory(s1, s2, sequence):
 
 
 def gamemove(probability, s1, s2, sequence):
-    sequence += random.choices('HT', weights=[1 - probability, probability], k=1)[0]
+    """
+    Appending a new toss to the sequence
+    :param probability: probability to toss T
+    :param s1: sequence of p1
+    :param s2: sequence of p2
+    :param sequence: sequence of coin tosses
+    :return: sequence with a new toss and 0 if p1 won, 2 if p2 won, -1 if no one won
+    """
+    sequence += random.choices("HT", weights=[1 - probability, probability], k=1)[0]
     ret = check_victory(s1, s2, sequence)
     return sequence, ret
 
 
 def gameloop(probability, s1, s2):
-    # setting number of victories for player 1 (p1w) and player 2 (p2w)
-    # to zero
+    """
+    Playing a game multiple times
+    :param probability: probability to toss T
+    :param s1: sequence of p1
+    :param s2: sequence of p2
+    :return: p1 win ratio
+    """
+    # setting initial p1 wins to 0
     p1w = 0
-    # setting an empty initial sequence in order to append future tosses
-    sequence = ""
-    # playing the game 1000 times in order to have good statistics
-    # (could be increased as you wish)
+    # number of tests can be increased for major statistical relevance
     tests = 1000
     for number in range(tests):
-        i = 0
+        # setting initial sequence empty
+        sequence = ""
+        # while True cicle ensure that game won't stop until a player wins
         while True:
             sequence, ret = gamemove(probability, s1, s2, sequence)
             if ret == 0:
                 p1w += 1
             if ret >= 0:
                 break
-            i += 1
-        # sequence returns empty after each game
-
+    # p1w / tests represents a win ratio (probability to win)
     return p1w / tests
 
 
 if __name__ == "__main__":
-    # p represents probability to toss T, it doesn't consider probabilities
-    # under 0.1 and over 0.9 because the simulation would be too much long,
-    # and the results are not interesting in those ranges
+    """
+    playing all possible games with different probabilities to toss T
+    """
+    # p represents probability to toss T, values under 0.1 and over 0.9 have being exluded because simulation would
+    # have been too long and those results are not interesting
     p = np.arange(0.1, 0.9, 0.001)
     intransitiveness = np.zeros_like(p)
-    # V is the victory matrix, each element of the matrix is the result of a
-    # gameloop between two sequences, the for loop repeat everything for
-    # different values of probability
+    # each iteration of the cycle is with a different probability to toss T
     for n in tqdm.tqdm(range(len(p))):
+        # V represents the victory matrix with all possible games
         V = np.matrix([[0, gameloop(p[n], "HHH", "HHT"), gameloop(p[n], "HHH", "HTH"),
                         gameloop(p[n], "HHH", "HTT"), gameloop(p[n], "HHH", "THH"),
                         gameloop(p[n], "HHH", "THT"), gameloop(p[n], "HHH", "TTH"),
@@ -101,13 +113,9 @@ if __name__ == "__main__":
                         gameloop(p[n], "TTT", "HTH"), gameloop(p[n], "TTT", "HTT"),
                         gameloop(p[n], "TTT", "THH"), gameloop(p[n], "TTT", "THT"),
                         gameloop(p[n], "TTT", "TTH"), 0]])
-        # intransitiveness is a function of probability, and gives me the
-        # unfairness of the game for each probability p to toss a T
         intransitiveness[n] = np.min(np.max(V, axis=0)) - 1 / 2
-        # printing values of probability that give transitiveness of the
-        # game, using isclose method because of issues with equality
-        # testing of no integers numbers
-        if math.isclose(0, intransitiveness[n], abs_tol=0.00001):
+        # values of probability that give 0 intransitiveness are particularly interesting so I will print them
+        if math.isclose(0, intransitiveness[n], abs_tol=0.01):
             print(p[n])
 
     pickle.dump([p, intransitiveness], open("data.pkl", "wb"))
