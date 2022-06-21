@@ -1,9 +1,9 @@
-import pickle
+import json
 import matplotlib.pyplot as plt
 import math
 
 
-p, intransitiveness = pickle.load(open("data.pkl", "rb"))
+p, intransitiveness = json.load(open("data.jso", "r"))
 # plotting the function intransitiveness(p)
 plt.plot(p, intransitiveness)
 plt.xlabel("Probability")

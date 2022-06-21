@@ -1,7 +1,7 @@
 import numpy as np
 import random
 import math
-import pickle
+import json
 import tqdm
 
 
@@ -55,7 +55,7 @@ def gameloop(probability, s1, s2):
     # setting initial p1 wins to 0
     p1w = 0
     # number of tests can be increased for major statistical relevance
-    tests = 1000
+    tests = 10
     for number in range(tests):
         # setting initial sequence empty
         sequence = ""
@@ -118,4 +118,4 @@ if __name__ == "__main__":
         if math.isclose(0, intransitiveness[n], abs_tol=0.01):
             print(p[n])
 
-    pickle.dump([p, intransitiveness], open("data.pkl", "wb"))
+    json.dump([p.tolist(), intransitiveness.tolist()], open("data.json", "w"))
