@@ -3,6 +3,13 @@ import random
 import math
 import json
 import tqdm
+from enum import Enum
+
+
+class Situation(Enum):
+    p1_wins = 1
+    p2_wins = 2
+    nobody_won_yet = 3
 
 
 def check_sequence(s, sequence):
@@ -24,10 +31,10 @@ def check_victory(s1, s2, sequence):
     :return: 0 if p1 won, 1 if p2 won, -1 if no one won
     """
     if check_sequence(s1, sequence):
-        return 0
+        return Situation.p1_wins
     if check_sequence(s2, sequence):
-        return 1
-    return -1
+        return Situation.p2_wins
+    return Situation.nobody_won_yet
 
 
 def gamemove(probability, s1, s2, sequence):
@@ -62,9 +69,9 @@ def gameloop(probability, s1, s2):
         # while True cicle ensure that game won't stop until a player wins
         while True:
             sequence, ret = gamemove(probability, s1, s2, sequence)
-            if ret == 0:
+            if ret == Situation.p1_wins:
                 p1w += 1
-            if ret >= 0:
+            if ret == Situation.p2_wins:
                 break
     # p1w / tests represents a win ratio (probability to win)
     return p1w / tests

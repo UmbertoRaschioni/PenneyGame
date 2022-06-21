@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import math
 
 
-p, intransitiveness = json.load(open("data.jso", "r"))
+p, intransitiveness = json.load(open("data.json", "r"))
 # plotting the function intransitiveness(p)
 plt.plot(p, intransitiveness)
 plt.xlabel("Probability")
