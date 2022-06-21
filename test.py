@@ -1,5 +1,8 @@
 import unittest
-from main import *
+from main import check_sequence
+from main import check_victory
+from main import gamemove
+from main import gameloop
 
 
 class Tests(unittest.TestCase):
