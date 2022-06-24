@@ -2,11 +2,10 @@ import json
 import matplotlib.pyplot as plt
 import math
 import configparser
-import sys
 
 
 configu = configparser.ConfigParser()
-configu.read(sys.argv[1])
+configu.read("config.txt")
 title = configu.get('paths', 'intransitiveness_pic')
 p, intransitiveness = json.load(open("data.json", "r"))
 # plotting the function intransitiveness(p)

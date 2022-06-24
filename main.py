@@ -4,11 +4,10 @@ import math
 import json
 import tqdm
 import configparser
-import sys
 from enum import Enum
 
 config = configparser.ConfigParser()
-config.read(sys.argv[1])
+config.read("config.txt")
 i = config.getint('settings', 'n')
 seed = config.getint('settings', 'seed')
 tests = config.getint('settings', 'tests')
