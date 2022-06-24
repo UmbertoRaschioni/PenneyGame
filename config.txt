@@ -1,11 +1,11 @@
 [settings]
-n=3
-seed=4
-title=Penney's Game
-tests=1000
-start=0.1
-end=0.9
-range=0.001
+n = 3
+seed = 4
+title = Penney's Game
+tests = 1000
+start = 0.1
+end = 0.9
+range = 0.001
 
 [paths]
 intransitiveness_pic: ./images/intransitiveness.png
