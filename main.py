@@ -92,6 +92,46 @@ def gameloop(probability, s1, s2, i):
     return p1w / tests
 
 
+def matrix():
+    # v represents the victory matrix with all possible games
+    v = np.matrix([[0, gameloop(p[n], "HHH", "HHT", i), gameloop(p[n], "HHH", "HTH", i),
+                    gameloop(p[n], "HHH", "HTT", i), gameloop(p[n], "HHH", "THH", i),
+                    gameloop(p[n], "HHH", "THT", i), gameloop(p[n], "HHH", "TTH", i),
+                    gameloop(p[n], "HHH", "TTT", i)],
+                   [gameloop(p[n], "HHT", "HHH", i), 0, gameloop(p[n], "HHT", "HTH", i),
+                    gameloop(p[n], "HHT", "HTT", i), gameloop(p[n], "HHT", "THH", i),
+                    gameloop(p[n], "HHT", "THT", i), gameloop(p[n], "HHT", "TTH", i),
+                    gameloop(p[n], "HHT", "TTT", i)],
+                   [gameloop(p[n], "HTH", "HHH", i), gameloop(p[n], "HTH", "HHT", i), 0,
+                    gameloop(p[n], "HTH", "HTT", i), gameloop(p[n], "HTH", "THH", i),
+                    gameloop(p[n], "HTH", "THT", i), gameloop(p[n], "HTH", "TTH", i),
+                    gameloop(p[n], "HTH", "TTT", i)],
+                   [gameloop(p[n], "HTT", "HHH", i), gameloop(p[n], "HTT", "HHT", i),
+                    gameloop(p[n], "HTT", "HTH", i), 0, gameloop(p[n], "HTT", "THH", i),
+                    gameloop(p[n], "HTT", "THT", i), gameloop(p[n], "HTT", "TTH", i),
+                    gameloop(p[n], "HTT", "TTT", i)],
+                   [gameloop(p[n], "THH", "HHH", i), gameloop(p[n], "THH", "HHT", i),
+                    gameloop(p[n], "THH", "HTH", i), gameloop(p[n], "THH", "HTT", i), 0,
+                    gameloop(p[n], "THH", "THT", i), gameloop(p[n], "THH", "TTH", i),
+                    gameloop(p[n], "THH", "TTT", i)],
+                   [gameloop(p[n], "THT", "HHH", i), gameloop(p[n], "THT", "HHT", i),
+                    gameloop(p[n], "THT", "HTH", i), gameloop(p[n], "THT", "HTT", i),
+                    gameloop(p[n], "THT", "THH", i), 0, gameloop(p[n], "THT", "TTH", i),
+                    gameloop(p[n], "THT", "TTT", i)],
+                   [gameloop(p[n], "TTH", "HHH", i), gameloop(p[n], "TTH", "HHT", i),
+                    gameloop(p[n], "TTH", "HTH", i), gameloop(p[n], "TTH", "HTT", i),
+                    gameloop(p[n], "TTH", "THH", i), gameloop(p[n], "TTH", "THT", i), 0,
+                    gameloop(p[n], "TTH", "TTT", i)],
+                   [gameloop(p[n], "TTT", "HHH", i), gameloop(p[n], "TTT", "HHT", i),
+                    gameloop(p[n], "TTT", "HTH", i), gameloop(p[n], "TTT", "HTT", i),
+                    gameloop(p[n], "TTT", "THH", i), gameloop(p[n], "TTT", "THT", i),
+                    gameloop(p[n], "TTT", "TTH", i), 0]])
+    intransitiveness[n] = np.min(np.max(v, axis=0)) - 1 / 2
+    # values of probability that give 0 intransitiveness are particularly interesting so I will print them
+    if math.isclose(0, intransitiveness[n], abs_tol=0.01):
+        print(p[n])
+
+
 if __name__ == "__main__":
     """
     playing all possible games with different probabilities to toss T
@@ -102,42 +142,6 @@ if __name__ == "__main__":
     intransitiveness = np.zeros_like(p)
     # each iteration of the cycle is with a different probability to toss T
     for n in tqdm.tqdm(range(len(p))):
-        # V represents the victory matrix with all possible games
-        V = np.matrix([[0, gameloop(p[n], "HHH", "HHT", i), gameloop(p[n], "HHH", "HTH", i),
-                        gameloop(p[n], "HHH", "HTT", i), gameloop(p[n], "HHH", "THH", i),
-                        gameloop(p[n], "HHH", "THT", i), gameloop(p[n], "HHH", "TTH", i),
-                        gameloop(p[n], "HHH", "TTT", i)],
-                       [gameloop(p[n], "HHT", "HHH", i), 0, gameloop(p[n], "HHT", "HTH", i),
-                        gameloop(p[n], "HHT", "HTT", i), gameloop(p[n], "HHT", "THH", i),
-                        gameloop(p[n], "HHT", "THT", i), gameloop(p[n], "HHT", "TTH", i),
-                        gameloop(p[n], "HHT", "TTT", i)],
-                       [gameloop(p[n], "HTH", "HHH", i), gameloop(p[n], "HTH", "HHT", i), 0,
-                        gameloop(p[n], "HTH", "HTT", i), gameloop(p[n], "HTH", "THH", i),
-                        gameloop(p[n], "HTH", "THT", i), gameloop(p[n], "HTH", "TTH", i),
-                        gameloop(p[n], "HTH", "TTT", i)],
-                       [gameloop(p[n], "HTT", "HHH", i), gameloop(p[n], "HTT", "HHT", i),
-                        gameloop(p[n], "HTT", "HTH", i), 0, gameloop(p[n], "HTT", "THH", i),
-                        gameloop(p[n], "HTT", "THT", i), gameloop(p[n], "HTT", "TTH", i),
-                        gameloop(p[n], "HTT", "TTT", i)],
-                       [gameloop(p[n], "THH", "HHH", i), gameloop(p[n], "THH", "HHT", i),
-                        gameloop(p[n], "THH", "HTH", i), gameloop(p[n], "THH", "HTT", i), 0,
-                        gameloop(p[n], "THH", "THT", i), gameloop(p[n], "THH", "TTH", i),
-                        gameloop(p[n], "THH", "TTT", i)],
-                       [gameloop(p[n], "THT", "HHH", i), gameloop(p[n], "THT", "HHT", i),
-                        gameloop(p[n], "THT", "HTH", i), gameloop(p[n], "THT", "HTT", i),
-                        gameloop(p[n], "THT", "THH", i), 0, gameloop(p[n], "THT", "TTH", i),
-                        gameloop(p[n], "THT", "TTT", i)],
-                       [gameloop(p[n], "TTH", "HHH", i), gameloop(p[n], "TTH", "HHT", i),
-                        gameloop(p[n], "TTH", "HTH", i), gameloop(p[n], "TTH", "HTT", i),
-                        gameloop(p[n], "TTH", "THH", i), gameloop(p[n], "TTH", "THT", i), 0,
-                        gameloop(p[n], "TTH", "TTT", i)],
-                       [gameloop(p[n], "TTT", "HHH", i), gameloop(p[n], "TTT", "HHT", i),
-                        gameloop(p[n], "TTT", "HTH", i), gameloop(p[n], "TTT", "HTT", i),
-                        gameloop(p[n], "TTT", "THH", i), gameloop(p[n], "TTT", "THT", i),
-                        gameloop(p[n], "TTT", "TTH", i), 0]])
-        intransitiveness[n] = np.min(np.max(V, axis=0)) - 1 / 2
-        # values of probability that give 0 intransitiveness are particularly interesting so I will print them
-        if math.isclose(0, intransitiveness[n], abs_tol=0.01):
-            print(p[n])
+        matrix()
 
     json.dump([p.tolist(), intransitiveness.tolist()], open("data.json", "w"))
