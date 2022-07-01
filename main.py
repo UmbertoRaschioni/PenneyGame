@@ -84,6 +84,7 @@ def gameloop(probability, s1, s2, i):
             sequence, ret = gamemove(probability, s1, s2, sequence, i)
             if ret == Situation.p1_wins:
                 p1w += 1
+                break
             if ret == Situation.p2_wins:
                 break
     # p1w / tests represents a win ratio (probability to win)
@@ -124,7 +125,7 @@ def matrix():
                     gameloop(p[n], "TTT", "HTH", 3), gameloop(p[n], "TTT", "HTT", 3),
                     gameloop(p[n], "TTT", "THH", 3), gameloop(p[n], "TTT", "THT", 3),
                     gameloop(p[n], "TTT", "TTH", 3), 0]])
-    intransitiveness[n] = np.min(np.max(v, axis=0)) - 1 / 2
+    intransitiveness[n] = np.min(np.max(v, axis=0)) - 0.5
     # values of probability that give 0 intransitiveness are particularly interesting so I will print them
     if math.isclose(0, intransitiveness[n], abs_tol=0.01):
         print(p[n])
@@ -139,7 +140,7 @@ def matrix_two():
                      0, gameloop(p[n], "TH", "TT", 2)],
                     [gameloop(p[n], "TT", "HH", 2), gameloop(p[n], "TT", "HT", 2),
                      gameloop(p[n], "TT", "TH", 2), 0]])
-    intransitiveness2[n] = np.min(np.max(v2, axis=0)) - 1 / 2
+    intransitiveness2[n] = np.min(np.max(v2, axis=0)) - 0.5
     if math.isclose(0, intransitiveness2[n], abs_tol=0.01):
         print(p[n])
 
