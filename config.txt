@@ -1,7 +1,7 @@
 [settings]
-n = 3
 seed = 4
 title = Penney's Game
+title2 = Penney's Game simplified
 tests = 1000
 start = 0.1
 end = 0.9
@@ -9,3 +9,4 @@ range = 0.001
 
 [paths]
 intransitiveness_pic: ./images/intransitiveness.png
+intransitiveness2_pic: ./images/intransitiveness2.png
