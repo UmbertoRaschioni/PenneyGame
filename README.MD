@@ -5,7 +5,9 @@ The two players chose, before tossing the coin, one sequence each of Head and Ta
 
 The game is intransitive, which means that, even if probability to toss Head or Tails is 50%, player 2 can always chose a sequence that will happen with more probability than the sequence chosen by player 1, it doesn't matter which sequence is chosen by player 1. That means that, if I represent all the possible sequences in a graph, and I know which node is an absorbing trap (sequence chosen by player 1), I can always find another absorbing trap with more probability to happen before the other absorbing trap.  
 
-It is possible to define a number called "intransitiveness", that measures how much the game is "unfair". If intransitiveness is >0 it means that the player 2 has an advantage, if intransitiveness is <0 it means that player 1 has an advantage. Intransitiveness change with loaded coins (probability to toss Tails different from 50%). The goal of the simulation is to find out the intransitiveness function with respect to probability and to find out if there are ways to load the coins in order to have a fair game (intransitiveness=0). The intransitiveness can be written as,
+It is possible to define a number called "intransitiveness", that measures how much the game is "unfair". If intransitiveness is >0 it means that the player 2 has an advantage, if intransitiveness is <0 it means that player 1 has an advantage. Intransitiveness change with loaded coins (probability to toss Tails different from 50%). The goal of the simulation is to find out the intransitiveness function with respect to probability and to find out if there are ways to load the coins in order to have a fair game (intransitiveness=0).  
+
+The intransitiveness can be written as,
 $$\sigma = min_{i=1,...,N}[max_{j=1,...,N}V_{ij}]-\frac{1}{2}$$
 where $V_{ij}$ is the victory matrix.  
 
