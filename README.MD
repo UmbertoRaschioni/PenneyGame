@@ -29,5 +29,6 @@ These are the steps in order to start the program and to plot the results:
 
 To show you some results, this is how a simulation of Penney's game and Penney's game simplified look like, given the parameters in the **config** file:  
 
-
+![This is an image](./images/intransitiveness.png)
+![This is an image](./images/intransitiveness2.png)
 
