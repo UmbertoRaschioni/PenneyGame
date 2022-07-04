@@ -19,6 +19,10 @@ This is how I divided my project into blocks:
 - In the file **config** there are all the definitions of the parameters used in the main file and in the plot file, as number of simulations for each game or range of probability. It's a .txt file that is imported in main file and plot file.
 - In the file **plot** there are the plottings of the results of Penney's game and Penney's game simplified. Here I used ConfigParser library in order to import the configuration file from command line, and passing its parameters to the program.  
 
-To show you some results, this is the result of simulation given the parameters in **config** file:
+These are the steps in order to start the program and to plot the results:  
+
+1. First, the user has to chose between the different parameters (like title of the graphs, range of probability, random seed...) on config.txt and eventually write a new one with the same name and the same syntax of **config**; if the user wants to do so, he has also to specify the local paths to the folder where graphs must be saved.
+2. Then, to start the game the user has to launch the file **main** which imports its parameters from **config** using ConfigParser library. The collected data (values of intransitiveness for Penney Game and Penney Game simplified) are saved automatically using json library. The simulation can take a long time, so, when the file is run, is possible to see the percentage of completion of the simulation thanks to the tqdm library.
+3. At the end the user has to launch the **plot** file with the configuration he wants. The data are loaded automatically with json library, and the results are automatically saved in the *images* folder.
 
 
