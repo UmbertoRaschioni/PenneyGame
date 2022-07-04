@@ -25,6 +25,9 @@ These are the steps in order to start the program and to plot the results:
 
 1. First, the user has to chose between the different parameters (like title of the graphs, range of probability, random seed...) on config.txt and eventually write a new one with the same name and the same syntax of **config**; if the user wants to do so, he has also to specify the local paths to the folder where graphs must be saved.
 2. Then, to start the game the user has to launch the file **main** which imports its parameters from **config** using ConfigParser library. The collected data (values of intransitiveness for Penney Game and Penney Game simplified) are saved automatically using json library. The simulation can take a long time, so, when the file is run, is possible to see the percentage of completion of the simulation thanks to the tqdm library.
-3. At the end the user has to launch the **plot** file with the configuration he wants. The data are loaded automatically with json library, and the results are automatically saved in the *images* folder.
+3. At the end the user has to launch the **plot** file with the configuration he wants. The data are loaded automatically with json library, and the results are automatically saved in the *images* folder.  
+
+To show you some results, this is how a simulation of Penney's game and Penney's game simplified look like, given the parameters in the **config** file:  
+
 
 
