@@ -10,4 +10,15 @@ $$\sigma = min_{i=1,...,N}[max_{j=1,...,N}V_{ij}]-\frac{1}{2}$$
 where $V_{ij}$ is the victory matrix.  
 
 It is possible to play also a simplified version of Penney's Game, where the sequence has lenght 2 instead of 3. What's interesting is that in this case the game is transitive for a 0.5 probability to toss a T, while for the classic Penney's game the game is intransitive. 
-It's also interesting to notice the different shape of the two intransitiveness functions, that is counterintuitive.
+It's also interesting to notice the different shape of the two intransitiveness functions, that is counterintuitive.  
+
+# Structure of the project
+This is how I divided my project into blocks:  
+- In the file **main** there is the main part of the code, where I have written two functions that represent the victory matrix of Penney's Game and the victory matrix of Penney's Game simplified, and a function where I simulate the game multiple times for each given probability and each given sequences of players, in order to have good statistics. The code also print the value of probability for which the intransitiveness of the game has 0 value. Then the code saves all the probability and intransitiveness values in order to plot them in another file. Here I used ConfigParser library in order to import the configuration file from command line, and passing its parameters to the program.
+- In the file **test** I used Unittest library to test the correct functioning of the functions from main file.
+- In the file **config** there are all the definitions of the parameters used in the main file and in the plot file, as number of simulations for each game or range of probability. It's a .txt file that is imported in main file and plot file.
+- In the file **plot** there are the plottings of the results of Penney's game and Penney's game simplified. Here I used ConfigParser library in order to import the configuration file from command line, and passing its parameters to the program.  
+
+To show you some results, this is the result of simulation given the parameters in **config** file:
+
+
